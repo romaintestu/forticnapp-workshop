@@ -163,5 +163,5 @@
 
 ## Next Steps
 
-Proceed to [Lab 2: Install Lacework CLI and Configure](../lab-02/README.md)
+Proceed to [Lab 2: Integrate AWS Inventory via CloudFormation](../lab-02/README.md)
 

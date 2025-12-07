@@ -12,29 +12,21 @@ Step-by-step instructions for integrating FortiCNAPP with AWS for cloud security
 - FortiCNAPP account access
 - Basic knowledge of AWS services (CloudTrail, Config, EC2)
 - Command-line access (Linux/Mac/Windows with WSL)
-- Terraform installed (covered in Lab 3)
 
 ## Workshop Structure
 
 - [Lab 1: Hands-on Cloud Security with FortiCNAPP](lab-01/README.md)
-- [Lab 2: Install Lacework CLI and Configure](lab-02/README.md)
-- [Lab 3: Install Terraform](lab-03/README.md)
-- [Lab 4: Integrate Inventory and Audit (AWS - Configuration and CloudTrail)](lab-04/README.md)
-- [Lab 5: Integrate Agentless Workload Scanning](lab-05/README.md)
-- [Lab 6: Install Linux Agent](lab-06/README.md)
-- [Lab 7: Install Windows Agent](lab-07/README.md)
-
-## Getting Started
-
-1. Review the [Agenda](AGENDA.md) for the complete workshop outline
-2. Start with Lab 1 for FortiCNAPP basics
-3. Follow labs sequentially as each builds upon previous concepts
+- [Lab 2: Integrate AWS Inventory via CloudFormation](lab-02/README.md)
+- [Lab 3: Integrate Agentless Workload Scanning via CloudFormation](lab-03/README.md)
+- [Lab 4: Install Linux Agent](lab-04/README.md)
+- [Lab 5: Install Windows Agent](lab-05/README.md)
+- [Lab 6: Clean Up!](lab-06/README.md)
+- [Lab 7: Install Lacework CLI and Terraform](lab-07/README.md)
+- [Lab 8: Install integrations via Terraform](lab-08/README.md)
 
 ## Resources
 
-- [FortiCNAPP Documentation](https://docs.fortinet.com/)
-- [AWS CloudTrail Documentation](https://docs.aws.amazon.com/cloudtrail/)
-- [AWS Config Documentation](https://docs.aws.amazon.com/config/)
+- [FortiCNAPP Documentation](https://docs.fortinet.com/product/forticnapp)
 
 ## Contributing
 

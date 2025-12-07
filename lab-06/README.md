@@ -1,88 +1,78 @@
-# Lab 6: Install Linux Agent
+# Lab 6: Clean Up!
 
 ## Objectives
 
-- Install FortiCNAPP agent on Linux EC2 instance
-- Configure agent for data collection
-- Verify agent connectivity and data flow
-- Review agent-based security monitoring
+- Delete CloudFormation stacks created in previous labs
+- Terminate EC2 instances created in previous labs
 
 ## Prerequisites
-
-- Completed Lab 5
-- Linux EC2 instance running (Ubuntu, RHEL, or Amazon Linux)
-- SSH access to EC2 instance
-- Sudo/root access on the instance
+- Access to AWS Console
 
 ## Lab Steps
 
-### Step 1: Prepare EC2 Instance
+### Step 1: Log into AWS Console
 
-1. SSH into your Linux EC2 instance
-2. Verify system requirements:
-   - Minimum 2GB RAM
-   - Network connectivity
-   - Sudo/root access
+1. Navigate to https://aws.amazon.com/
+2. Click **Sign into console**
+3. After logging in, change the region to **Asia Pacific (Singapore)** using the region selector in the top right of the AWS Console
 
-### Step 2: Download and Install Agent
+### Step 2: Delete CloudFormation Stacks
 
-#### Ubuntu/Debian
+#### Delete Agentless Workload Scanning Stack (from Lab 3)
 
-```bash
-curl -sSL https://lacework.net/install.sh | sudo bash -s -- -U https://<account>.lacework.net -T <token>
-```
+1. Navigate to **CloudFormation** service in AWS Console
+2. In the **Stacks** list, find the stack you created in Lab 3 (e.g., `Agentless Workload Scanning [your name]`)
+3. Select the stack
+4. Click **Delete**
+5. Confirm deletion by typing the stack name in the confirmation dialog
+6. Click **Delete stack**
+7. Wait for the stack deletion to complete (this may take a few minutes)
 
-#### RHEL/CentOS/Amazon Linux
+#### Delete AWS Inventory and CloudTrail Stack (from Lab 2)
 
-```bash
-curl -sSL https://lacework.net/install.sh | sudo bash -s -- -U https://<account>.lacework.net -T <token>
-```
+1. In the **CloudFormation** service, find the stack you created in Lab 2 (typically named something like `lacework-cloudtrail-config` or similar)
+2. Select the stack
+3. Click **Delete**
+4. Confirm deletion by typing the stack name in the confirmation dialog
+5. Click **Delete stack**
+6. Wait for the stack deletion to complete (this may take a few minutes)
 
-Replace `<account>` with your FortiCNAPP account name and `<token>` with your agent token from FortiCNAPP console.
+**Note**: If you see errors during stack deletion, check the stack events for details. Some resources may need to be manually cleaned up if they have dependencies.
 
-### Step 3: Verify Agent Installation
+### Step 3: Terminate EC2 Instances
 
-```bash
-sudo systemctl status lacework
-sudo lacework agent status
-```
+#### Terminate Linux EC2 Instance (from Lab 4)
 
-### Step 4: Configure Agent (if needed)
+1. Navigate to **EC2** service in AWS Console
+2. Click on **Instances** in the left navigation
+3. Find the Linux EC2 instance you created in Lab 4 (e.g., `FortiCNAPP-Linux-Agent`)
+4. Select the instance
+5. Click **Instance state** > **Terminate instance**
+6. Confirm termination by typing `terminate` in the confirmation dialog
+7. Click **Terminate**
 
-Edit agent configuration:
+#### Terminate Windows EC2 Instance (from Lab 5)
 
-```bash
-sudo vi /var/lib/lacework/config/config.json
-```
+1. In the **EC2** service, find the Windows EC2 instance you created in Lab 5 (e.g., `FortiCNAPP-Windows-Agent`)
+2. Select the instance
+3. Click **Instance state** > **Terminate instance**
+4. Confirm termination by typing `terminate` in the confirmation dialog
+5. Click **Terminate**
 
-Restart agent:
+**Note**: Terminated instances will remain visible for a short time before being automatically removed. You may still see them in the list with a "terminated" state.
 
-```bash
-sudo systemctl restart lacework
-```
+### Step 4: Verify Cleanup
 
-### Step 5: Verify Data Collection
-
-1. Wait 5-10 minutes for initial data collection
-2. Check FortiCNAPP console for agent status
-3. Review process and network activity data
-4. Verify file integrity monitoring is active
+1. In **CloudFormation**, verify that all stacks have been deleted (the list should be empty or only show other stacks not related to this workshop)
+2. In **EC2** > **Instances**, verify that your workshop instances are terminated or no longer visible
+3. Optionally, check **S3** buckets and **IAM** roles to ensure any resources created by the CloudFormation stacks have been cleaned up
 
 ## Expected Results
 
-- Agent installed and running on Linux instance
-- Agent status shows "Connected" in FortiCNAPP console
-- Process and network data visible
-- File integrity monitoring active
-
-## Troubleshooting
-
-- Verify agent token is correct
-- Check network connectivity to FortiCNAPP
-- Review agent logs: `sudo journalctl -u lacework -f`
-- Ensure firewall allows outbound connections
+- All CloudFormation stacks from Labs 2 and 3 deleted
+- All EC2 instances from Labs 4 and 5 terminated
 
 ## Next Steps
 
-Proceed to [Lab 7: Install Windows Agent](../lab-07/README.md)
+Proceed to [Lab 7: Install Lacework CLI and Terraform](../lab-07/README.md)
 
