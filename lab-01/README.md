@@ -83,6 +83,23 @@
 5. Click on the **Observations** tab to see the timeline of events
 6. Review the intrusion graph and observations table to understand the sequence of activities and how an attacker might have progressed through our environment
 
+#### Workloads - Hosts
+
+*How can we visualize and understand process and network activity across our cloud environment over time?*
+
+1. Navigate to **Threat Center** > **Workloads** > **Hosts** in the left navigation panel
+2. Scroll down to view the polygraph visualization
+3. Review the polygraph, which is an hourly map of process and network activity in the cloud environment
+4. Click on the timeline at the bottom to explore different periods in time
+5. Scroll down to understand what is running in the environment
+
+#### Workloads - Kubernetes
+
+*How can we monitor process activity within Kubernetes clusters?*
+
+1. Navigate to **Threat Center** > **Workloads** > **Kubernetes** in the left navigation panel
+2. Click on the **Pod Network** tab to see process activity within the Kubernetes cluster
+
 ### Step 4: Explore Risk Center Features
 
 *How can we analyze security risks across attack paths, compliance, identities, vulnerabilities, and code security?*
