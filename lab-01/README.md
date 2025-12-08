@@ -51,6 +51,7 @@
 7. Review the results to see hosts that are part of attack paths
 8. For one or more hosts in the results, click **Graph** to visualize relationships
 9. Explore the graph view to understand how these hosts connect to other resources, identities, and potential attack vectors
+10. For a host in the results, review its details. How many vulnerabilities are actually active?
 
 #### Search
 
