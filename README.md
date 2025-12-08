@@ -24,6 +24,7 @@ Step-by-step instructions for integrating FortiCNAPP with AWS for cloud security
 - [Lab 7: Install Lacework CLI and Terraform](lab-07/README.md)
 - [Lab 8: Install integrations via Terraform](lab-08/README.md)
 - [Lab 9: Code Security for Infrastructure as Code (IaC)](lab-09/README.md)
+- [Lab 10: Code Security for Applications (SCA)](lab-10/README.md)
 
 ## Resources
 
