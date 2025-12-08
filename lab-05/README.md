@@ -137,7 +137,3 @@ ls C:\ProgramData\Lacework\Logs\
 - LWDataCollector service running
 - Installation directory exists at `C:\ProgramData\Lacework\`
 - Log files present in `C:\ProgramData\Lacework\Logs\`
-
-## Next Steps
-
-Proceed to [Lab 6: Clean Up!](../lab-06/README.md)

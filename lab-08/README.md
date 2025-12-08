@@ -205,7 +205,4 @@ rm -rf ~/lacework/aws
 
 - [FortiCNAPP Documentation: AWS Integration Terraform from AWS CloudShell](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/283460/aws-integration-terraform-from-aws-cloudshell)
 
-## Next Steps
-
-All labs in the FortiCNAPP AWS Integration workshop are complete!
 

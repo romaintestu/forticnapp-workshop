@@ -130,6 +130,3 @@ This should display the Terraform version information.
 - CLI connectivity verified with FortiCNAPP
 - Terraform installed and accessible from command line
 
-## Next Steps
-
-Proceed to [Lab 8: Install integrations via Terraform](../lab-08/README.md)

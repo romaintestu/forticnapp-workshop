@@ -92,7 +92,3 @@ After the CloudFormation stack completes, investigate the ECS cluster that was p
 
 - CloudFormation stack successfully deployed in AWS
 - Agentless Workload Scanning integrated with FortiCNAPP
-
-## Next Steps
-
-Proceed to [Lab 4: Install Linux Agent](../lab-04/README.md)

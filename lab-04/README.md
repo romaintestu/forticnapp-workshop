@@ -101,7 +101,3 @@ Press `Ctrl+C` to stop tailing the log.
 ## Expected Results
 
 - Agent installed and running on Linux instance
-
-## Next Steps
-
-Proceed to [Lab 5: Install Windows Agent](../lab-05/README.md)

@@ -72,7 +72,3 @@
 - All CloudFormation stacks from Labs 2 and 3 deleted
 - All EC2 instances from Labs 4 and 5 terminated
 
-## Next Steps
-
-Proceed to [Lab 7: Install Lacework CLI and Terraform](../lab-07/README.md)
-

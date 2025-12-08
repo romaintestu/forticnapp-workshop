@@ -95,7 +95,3 @@ After the stack creation is complete, review the resources that were created:
 - CloudTrail log location (S3 bucket) identified
 - IAM role created and reviewed
 - AWS CloudTrail and Configuration integrated with FortiCNAPP
-
-## Next Steps
-
-Proceed to [Lab 3: Integrate Agentless Workload Scanning via CloudFormation](../lab-03/README.md)

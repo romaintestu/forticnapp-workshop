@@ -202,7 +202,3 @@
 2. Review the integrations available
 3. Review the integration options available in the Integrations section
 
-## Next Steps
-
-Proceed to [Lab 2: Integrate AWS Inventory via CloudFormation](../lab-02/README.md)
-
