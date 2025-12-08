@@ -16,7 +16,7 @@
 
 ### Step 1: Access FortiCNAPP Console
 
-*Goal: Access the FortiCNAPP demo environment and select the appropriate tenant.*
+*How do we access the FortiCNAPP demo environment and select the appropriate tenant?*
 
 1. Navigate to https://partner-demo.lacework.net/
 2. Enter your email address
@@ -27,11 +27,11 @@
 
 ### Step 2: Explore Discovery Features
 
-*Goal: Use Discovery features to identify security risks and investigate application behavior in the cloud environment.*
+*How can we use Discovery features to identify security risks and investigate application behavior in the cloud environment?*
 
 #### Resource Inventory
 
-*Goal: Identify EC2 instances with the highest security risk based on vulnerability counts.*
+*Which EC2 instances have the highest security risk based on vulnerability counts, and how can this help prioritize remediation efforts?*
 
 1. Navigate to **Discovery** > **Resource Inventory** in the left navigation panel
 2. Filter by **Resource Type = ec2:instance** using the filter dropdown
@@ -40,34 +40,41 @@
 
 #### Search
 
-*Goal: Investigate application behavior in the cloud environment.*
+*How can we investigate application behavior and resource utilization for any application running on EC2? Customers frequently ask about the FortiCNAPP agent (datacollector): What does it talk to? How much CPU does it use? What is the memory usage trend? FortiCNAPP provides visibility into these metrics for any application, not just the agent itself.*
 
 1. Click the **Search** icon in the left navigation panel
 2. Search for **datacollector** (this is the FortiCNAPP agent application)
 3. In the search results, click on **datacollector**
-4. Review the application details to investigate what datacollector is doing in the cloud environment
+4. Review the application details to investigate what datacollector is doing in the cloud environment:
+   - What network connections is it making?
+   - What processes is it running?
+   - How is it consuming resources?
 5. Answer the following questions:
    - What is the datacollector memory usage trend?
    - What is the CPU usage percentage?
 
 ### Step 3: Explore Threat Center Features
 
-*Goal: Investigate security alerts and analyze the timeline of events for potential threats.*
+*How can we investigate security alerts and analyze the timeline of events for potential threats?*
 
 #### Alerts
+
+*How does FortiCNAPP detect and present security incidents, and how can this help us respond effectively to real-world security events?*
 
 1. Navigate to **Threat Center** > **Alerts** in the left navigation panel
 2. Filter by **past 3 months** using the date range selector
 3. Filter for **Composite** alerts using the alert category filter
 4. Open the **Potentially Compromised AWS Keys** alert
 5. Click on the **Observations** tab to see the timeline of events
-6. Review the intrusion graph and observations table to understand the sequence of activities
+6. Review the intrusion graph and observations table to understand the sequence of activities and how an attacker might have progressed through our environment
 
 ### Step 4: Explore Risk Center Features
 
-*Goal: Analyze security risks across attack paths, compliance, identities, vulnerabilities, and code security.*
+*How can we analyze security risks across attack paths, compliance, identities, vulnerabilities, and code security?*
 
 #### Attack Path
+
+*How could attackers exploit misconfigurations and exposed secrets to move through our environment? How does attack path analysis help prioritize remediation efforts?*
 
 1. Navigate to **Risk Center** > **Attack Path** > **Top Work Items** in the left navigation panel
 2. In the **Top risky paths with exposed secrets** section, select an entry from the table
@@ -86,7 +93,7 @@
 
 #### Compliance
 
-*Goal: Review compliance posture and identify violations against security frameworks.*
+*How can we review compliance posture and identify violations against security frameworks?*
 
 1. Navigate to **Risk Center** > **Compliance** > **Cloud** in the left navigation panel
 2. Click on **CIS Amazon Web Services Foundations Benchmark** framework
@@ -98,7 +105,7 @@
 
 #### Identities
 
-*Goal: Analyze identity and access management risks in the cloud environment.*
+*How can we analyze identity and access management risks in the cloud environment?*
 
 1. Navigate to **Risk Center** > **Identities** in the left navigation panel
 2. Select the **Top identity risks** tab
@@ -108,7 +115,7 @@
 
 #### Vulnerabilities
 
-*Goal: Identify and prioritize vulnerabilities across cloud resources.*
+*How can we identify and prioritize vulnerabilities across cloud resources? Why does filtering by active packages help focus on more critical vulnerabilities?*
 
 1. Navigate to **Risk Center** > **Vulnerabilities** > **Vulnerabilities[New]** in the left navigation panel
 2. Click **Explore: Hosts**
@@ -120,7 +127,7 @@
 
 #### Code Security
 
-*Goal: Review code security findings and software composition analysis results.*
+*How can we review code security findings and software composition analysis results? How does FortiCNAPP scan Infrastructure as Code (IaC) and application code to find misconfigurations and hard-coded secrets before they reach production?*
 
 1. Navigate to **Risk Center** > **Code Security** > **Infrastructure (IaC)** in the left navigation panel
 2. Choose a repository from the list
@@ -132,9 +139,11 @@
 
 ### Step 5: Explore Governance Features
 
-*Goal: Review security policies across different categories to understand policy management and coverage.*
+*How can we review security policies across different categories to understand policy management and coverage?*
 
 #### Policies
+
+*How do security policies define the rules that FortiCNAPP uses to detect violations and generate alerts?*
 
 1. Navigate to **Governance** > **Policies** in the left navigation panel
 2. Review policies in the **Compliance** tab
@@ -144,7 +153,7 @@
 
 ### Step 6: Configure Settings and Review Integration Options
 
-*Goal: Configure user settings and understand available methods for integrating FortiCNAPP with cloud environments.*
+*How can we configure user settings and understand available methods for integrating FortiCNAPP with cloud environments?*
 
 #### Change Tenant
 
