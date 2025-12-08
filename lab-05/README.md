@@ -23,7 +23,7 @@
 3. Configure the instance:
    - **Name**: Enter a name (e.g., `FortiCNAPP-Windows-Agent`)
    - **Application and OS Images**: Select **Microsoft Windows Server** (Windows Server 2022 or later)
-   - **Instance type**: Select **t3.micro** or **t3.small**
+   - **Instance type**: Select **c5.large**
    - **Key pair (login)**: 
      - Click **Create new key pair**
      - Enter a key pair name (e.g., `forticnapp-windows-key`)
