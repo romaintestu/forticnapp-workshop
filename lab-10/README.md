@@ -7,6 +7,7 @@
 - Scan application code for vulnerabilities, weaknesses, and license risks
 - Review scan results and understand security findings
 - Generate a Software Bill of Materials (SBOM)
+- Generate scan reports in JSON and Markdown formats
 
 ## Prerequisites
 
@@ -125,13 +126,63 @@ View the generated SBOM:
 cat sbom.json
 ```
 
+### Step 9: Generate Scan Reports
+
+Generate detailed scan reports in multiple formats for sharing and documentation:
+
+**Generate JSON Report:**
+
+```bash
+lacework sca scan ./ -f json -o scan-report.json
+```
+
+This creates a comprehensive JSON report containing all scan findings, including:
+- Vulnerability details with CVEs
+- Weakness findings (CWEs)
+- Detected secrets
+- License information
+- Package dependencies
+
+View the JSON report:
+
+```bash
+cat scan-report.json
+```
+
+**Generate Markdown Report:**
+
+```bash
+lacework sca scan ./ -f md -o scan-report.md
+```
+
+This creates a human-readable Markdown report that includes:
+- Executive summary
+- Vulnerability breakdown by severity
+- Detailed findings with descriptions
+- Recommendations
+- Package and dependency information
+
+View the Markdown report:
+
+```bash
+cat scan-report.md
+```
+
+These reports can be:
+- Shared with development teams
+- Included in security documentation
+- Used for compliance reporting
+- Integrated into CI/CD pipelines
+- Archived for audit purposes
+
 ## Expected Results
 
 - Repository successfully cloned to CloudShell
 - SCA component installed and updated
 - Application code scanned for security issues
 - Multiple vulnerabilities detected (the example repository contains intentional security issues including CVEs, hard-coded credentials, and license risks)
-- SBOM generated successfully
+- SBOM generated successfully in CycloneDX JSON format
+- Scan reports generated in JSON and Markdown formats
 - Findings categorized by severity and type (vulnerabilities, weaknesses, licenses)
 
 ## Additional Resources
