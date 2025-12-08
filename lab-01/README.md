@@ -38,6 +38,20 @@
 3. Sort the table by **Vulnerabilities** (click the Vulnerabilities column header or use the "Sort: Vulnerabilities" option)
 4. Review the table to identify which EC2 instances have the highest number of vulnerabilities
 
+#### Explorer
+
+*How can we combine multiple security insights using Explorer to build custom queries and visualize relationships between hosts and attack paths?*
+
+1. Navigate to **Discovery** > **Explorer** in the left navigation panel
+2. Click **Build your own query**
+3. In the query builder, ensure **SHOW** is set to **Hosts**
+4. Click **+ Add clause**
+5. Add a **WHERE** clause: **Attack Path** = **true**
+6. Click **Search** to execute the query
+7. Review the results to see hosts that are part of attack paths
+8. For one or more hosts in the results, click **Graph** to visualize relationships
+9. Explore the graph view to understand how these hosts connect to other resources, identities, and potential attack vectors
+
 #### Search
 
 *How can we investigate application behavior and resource utilization for any application running on EC2? Customers frequently ask about the FortiCNAPP agent (datacollector): What does it talk to? How much CPU does it use? What is the memory usage trend? FortiCNAPP provides visibility into these metrics for any application, not just the agent itself.*
