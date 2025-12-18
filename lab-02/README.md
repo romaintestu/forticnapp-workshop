@@ -10,7 +10,9 @@
 
 1. Navigate to https://aws.amazon.com/
 2. Click **Sign into console**
-3. After logging in, change to your local region (e.g., **Asia Pacific (Singapore)**) using the region selector in the top right of the AWS Console
+3. **IMPORTANT:** After logging in, change to your local region (e.g., **Asia Pacific (Singapore)**) using the region selector in the top right of the AWS Console
+   - This step is critical - the CloudFormation template will deploy to whatever region is selected
+   - If you skip this step, resources will be created in the wrong region
 
 ### Step 2: Get CloudFormation Template from FortiCNAPP
 
