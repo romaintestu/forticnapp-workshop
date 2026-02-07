@@ -1,137 +1,74 @@
-# Lab 7: Install Lacework CLI and Terraform
+# Lab 6: Clean Up!
 
 ## Objectives
 
-- Install the Lacework CLI tool in AWS CloudShell
-- Configure CLI with FortiCNAPP credentials
-- Install Terraform in AWS CloudShell
-- Verify CLI and Terraform installations
+- Delete CloudFormation stacks created in previous labs
+- Terminate EC2 instances created in previous labs
 
 ## Prerequisites
-
-- AWS account access
-- FortiCNAPP account credentials
+- Access to AWS Console
 
 ## Lab Steps
 
-### Step 1: Log into AWS Console and Open CloudShell
+### Step 1: Log into AWS Console
 
 1. Navigate to https://aws.amazon.com/
 2. Click **Sign into console**
 3. After logging in, change to your local region (e.g., **Asia Pacific (Singapore)**) using the region selector in the top right of the AWS Console
-4. Click the **CloudShell** icon in the top navigation bar (cloud icon with `>_` symbol)
-5. Wait for CloudShell to initialize (this may take a minute the first time)
-6. Once CloudShell opens, you'll have a Linux-based terminal environment ready to use
 
-### Step 2: Set Up Installation Directory
+### Step 2: Delete CloudFormation Stacks
 
-Create a bin directory in your home folder and add it to your PATH:
+#### Delete Agentless Workload Scanning Stack (from Lab 3)
 
-```bash
-mkdir -p "$HOME/bin"
-echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
-source ~/.bashrc
-```
+1. Navigate to **CloudFormation** service in AWS Console
+2. In the **Stacks** list, find the stack you created in Lab 3 (e.g., `Agentless Workload Scanning [your name]`)
+3. Select the stack
+4. Click **Delete**
+5. Confirm deletion by typing the stack name in the confirmation dialog
+6. Click **Delete stack**
+7. Wait for the stack deletion to complete (this may take a few minutes)
 
-This directory will be used for both Lacework CLI and Terraform installations.
+#### Delete AWS Inventory and CloudTrail Stack (from Lab 2)
 
-### Step 3: Install Lacework CLI
+1. In the **CloudFormation** service, find the stack you created in Lab 2 (typically named something like `lacework-cloudtrail-config` or similar)
+2. Select the stack
+3. Click **Delete**
+4. Confirm deletion by typing the stack name in the confirmation dialog
+5. Click **Delete stack**
+6. Wait for the stack deletion to complete (this may take a few minutes)
 
-In the CloudShell terminal, run:
+**Note**: If you see errors during stack deletion, check the stack events for details. Some resources may need to be manually cleaned up if they have dependencies.
 
-```bash
-curl https://raw.githubusercontent.com/lacework/go-sdk/main/cli/install.sh | bash -s -- -d "$HOME/bin"
-```
+### Step 3: Terminate EC2 Instances
 
-This will download and install the Lacework CLI tool to your home bin directory.
+#### Terminate Linux EC2 Instance (from Lab 4)
 
-**Note**: For Windows installation (if needed outside CloudShell), download from the [Lacework CLI releases page](https://github.com/lacework/go-sdk/releases).
+1. Navigate to **EC2** service in AWS Console
+2. Click on **Instances** in the left navigation
+3. Find the Linux EC2 instance you created in Lab 4 (e.g., `FortiCNAPP-Linux-Agent`)
+4. Select the instance
+5. Click **Instance state** > **Terminate instance**
+6. Confirm termination by typing `terminate` in the confirmation dialog
+7. Click **Terminate**
 
-### Step 4: Create Service User in FortiCNAPP
+#### Terminate Windows EC2 Instance (from Lab 5)
 
-Before creating an API key, you need to create a new service user with the appropriate permissions:
+1. In the **EC2** service, find the Windows EC2 instance you created in Lab 5 (e.g., `FortiCNAPP-Windows-Agent`)
+2. Select the instance
+3. Click **Instance state** > **Terminate instance**
+4. Confirm termination by typing `terminate` in the confirmation dialog
+5. Click **Terminate**
 
-1. Log into FortiCNAPP console at https://partner-demo.lacework.net/
-2. Ensure tenant is set to **FORTINETAPACDEMO**
-3. Navigate to **Settings** > **Access Control** > **Users**
-4. Click **Add New**
-5. Choose **User Type**: **Service User**
-6. Fill in the service user details:
-   - **Name**: Enter a name (e.g., `[Your Name] Service User`)
-   - **Description**: Enter a description (e.g., `lab-07`)
-7. Click **Next**
-8. Add the following user groups to grant the necessary permissions:
-   - **'Cloud Integrations'** - Required for AWS integration setup (Labs 7-8)
-   - **'Code Security Scanner'** - Required for code security scanning (Labs 9-10)
-9. Complete the service user creation
+**Note**: Terminated instances will remain visible for a short time before being automatically removed. You may still see them in the list with a "terminated" state.
 
-### Step 5: Create API Key in FortiCNAPP
+### Step 4: Verify Cleanup
 
-Now create an API key attached to the service user you just created:
-
-1. Navigate to **Settings** > **Configuration** > **API keys**
-2. Click **Create API key**
-3. Fill in the API key details:
-   - **Name**: Enter a name (e.g., `service-user-api-key`)
-   - **Description**: Enter a description (e.g., `lab-07`)
-   - **Assign this to a service user**: Toggle this **ON**
-   - **Select a service user**: Choose the service user you just created (e.g., `[Your Name] Service User`)
-4. Click **Save**
-5. After saving, click on the ellipsis (three dots) next to the API key in the list and select **Download** to download the key as JSON.
-6. Open the downloaded JSON file and note the **API Key** and **API Secret** values. Keep these credentials ready for the next step
-
-### Step 6: Configure CLI
-
-In CloudShell, run:
-
-```bash
-lacework configure
-```
-
-Enter your FortiCNAPP account credentials when prompted:
-- **Account**: Your FortiCNAPP account name (e.g., `partner-demo`)
-- **API Key**: The API key you just created
-- **API Secret**: The API secret you just copied
-
-### Step 7: Verify CLI Installation
-
-```bash
-lacework version
-lacework api get /api/v2/UserProfile
-```
-
-The second command should return your user profile information, confirming the CLI is properly configured and connected.
-
-### Step 8: Install Terraform
-
-Install Terraform in AWS CloudShell:
-
-1. Download Terraform (Linux amd64) and unzip it to your bin folder:
-
-First, get the latest Terraform version:
-
-```bash
-TERRAFORM_VERSION=$(curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
-```
-
-Then download and install that version:
-
-```bash
-wget -O terraform.zip "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
-unzip terraform.zip
-mv terraform "$HOME/bin/"
-rm terraform.zip
-# Configure Terraform to use the temporary directory for cache to prevent running out of cloudshell storage space
-echo 'export TF_PLUGIN_CACHE_DIR="/tmp"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-**Alternative**: If you prefer to check manually, visit [HashiCorp's Terraform releases page](https://releases.hashicorp.com/terraform/) and replace `${TERRAFORM_VERSION}` in the URL with the latest version number (e.g., `1.9.5`).
-
+1. In **CloudFormation**, verify that all stacks have been deleted (the list should be empty or only show other stacks not related to this workshop)
+2. In **EC2** > **Instances**, verify that your workshop instances are terminated or no longer visible
+3. Optionally, check **S3** buckets and **IAM** roles to ensure any resources created by the CloudFormation stacks have been cleaned up
 
 ## Expected Results
 
-- Lacework CLI installed and configured in AWS CloudShell
-- CLI connectivity verified with FortiCNAPP
-- Terraform installed and accessible from command line
+- All CloudFormation stacks from Labs 2 and 3 deleted
+- All EC2 instances from Labs 4 and 5 terminated
 

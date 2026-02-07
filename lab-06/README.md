@@ -1,12 +1,12 @@
-# Lab 6: Clean Up!
+# Lab 5: Install Windows Agent
 
 ## Objectives
 
-- Delete CloudFormation stacks created in previous labs
-- Terminate EC2 instances created in previous labs
+- Install FortiCNAPP agent on Windows EC2 instance
 
 ## Prerequisites
-- Access to AWS Console
+
+- AWS account with EC2 launch permissions
 
 ## Lab Steps
 
@@ -16,59 +16,124 @@
 2. Click **Sign into console**
 3. After logging in, change to your local region (e.g., **Asia Pacific (Singapore)**) using the region selector in the top right of the AWS Console
 
-### Step 2: Delete CloudFormation Stacks
-
-#### Delete Agentless Workload Scanning Stack (from Lab 3)
-
-1. Navigate to **CloudFormation** service in AWS Console
-2. In the **Stacks** list, find the stack you created in Lab 3 (e.g., `Agentless Workload Scanning [your name]`)
-3. Select the stack
-4. Click **Delete**
-5. Confirm deletion by typing the stack name in the confirmation dialog
-6. Click **Delete stack**
-7. Wait for the stack deletion to complete (this may take a few minutes)
-
-#### Delete AWS Inventory and CloudTrail Stack (from Lab 2)
-
-1. In the **CloudFormation** service, find the stack you created in Lab 2 (typically named something like `lacework-cloudtrail-config` or similar)
-2. Select the stack
-3. Click **Delete**
-4. Confirm deletion by typing the stack name in the confirmation dialog
-5. Click **Delete stack**
-6. Wait for the stack deletion to complete (this may take a few minutes)
-
-**Note**: If you see errors during stack deletion, check the stack events for details. Some resources may need to be manually cleaned up if they have dependencies.
-
-### Step 3: Terminate EC2 Instances
-
-#### Terminate Linux EC2 Instance (from Lab 4)
+### Step 2: Create Windows EC2 Instance
 
 1. Navigate to **EC2** service in AWS Console
+2. Click **Launch Instance**
+3. Configure the instance:
+   - **Name**: Enter a name (e.g., `FortiCNAPP-Windows-Agent`)
+   - **Application and OS Images**: Select **Microsoft Windows Server** (Windows Server 2022 or later)
+   - **Instance type**: Select **c5.large**
+   - **Key pair (login)**: 
+     - Click **Create new key pair**
+     - Enter a key pair name (e.g., `forticnapp-windows-key`)
+     - Select **RSA** as the key pair type
+     - Select **.pem** format
+     - Click **Create key pair**
+     - **Important**: Download the key pair file and save it securely - you'll need it to retrieve the Windows password
+4. **Network settings**:
+   - Use default
+   - The default security group will allow RDP traffic, providing access to your instance
+5. **Configure storage**: Leave default (30 GB gp3)
+6. Click **Launch Instance**
+7. Wait for the instance to reach **Running** status
+
+### Step 3: Get Windows Password and Connect
+
+1. In AWS Console, navigate to **EC2** service
 2. Click on **Instances** in the left navigation
-3. Find the Linux EC2 instance you created in Lab 4 (e.g., `FortiCNAPP-Linux-Agent`)
-4. Select the instance
-5. Click **Instance state** > **Terminate instance**
-6. Confirm termination by typing `terminate` in the confirmation dialog
-7. Click **Terminate**
+3. Select the Windows EC2 instance you just created
+4. Click **Connect**
+5. Select **RDP Client** tab
+6. Click **Get Password** (you may need to wait for a few minutes after the instance is running)
+7. Upload your key pair file (.pem) to decrypt the password
+8. Copy the **Administrator password**
+9. Click **Download remote desktop file** to download the RDP connection file
+10. Open the downloaded RDP file:
+    - **Windows**: Double-click the file to open it in Remote Desktop Connection
+    - **Mac**: Right-click and open with Windows app (previously known as Microsoft Remote Desktop app)
+11. When prompted, enter the **Administrator password** you copied in step 8
+12. **Note**: You may see a certificate warning when connecting - this is normal for EC2 instances. Click **Continue** to proceed.
+13. If the credentials don't work:
+    - Wait a few more minutes - Windows instances can take 3-5 minutes to fully initialize
+    - Make sure you copied the password correctly (it's case-sensitive)
+    - Try clicking **Get Password** again in the AWS Console to refresh
+    - Ensure you're using **Administrator** (with capital A) as the username
+14. Once connected, open **PowerShell as Administrator**:
+    - Right-click the **Start** button and select **Windows PowerShell (Admin)** or **Terminal (Admin)**
+    - Or search for "PowerShell" in the Start menu, right-click it, and select **Run as administrator**
+    - Or press **Windows key + X** and select **Windows PowerShell (Admin)** or **Terminal (Admin)**
 
-#### Terminate Windows EC2 Instance (from Lab 5)
+### Step 4: Get Agent Installation Information from FortiCNAPP
 
-1. In the **EC2** service, find the Windows EC2 instance you created in Lab 5 (e.g., `FortiCNAPP-Windows-Agent`)
-2. Select the instance
-3. Click **Instance state** > **Terminate instance**
-4. Confirm termination by typing `terminate` in the confirmation dialog
-5. Click **Terminate**
+1. Log into FortiCNAPP console at https://partner-demo.lacework.net/
+2. Ensure tenant is set to **FORTINETAPACDEMO**
+3. Navigate to **Settings** > **Configuration** > **Agent tokens**
+4. Find an existing Windows agent token in the list
+5. Click the **Actions** ellipsis (three dots) for the token
+6. Select **Install**
+7. In the installation panel:
+   - Expand **Lacework PowerShell Script (recommended)** section
+   - Click **Copy URL** to copy the PowerShell script ZIP URL (for downloading the script)
+   - Expand **MSI Package** section
+   - Click **Copy URL** to copy the MSI package URL (you'll need this for the MSIURL parameter)
+   - **Important**: Also copy the **Access Token** value shown in the installation panel (you'll need this for the AccessToken parameter)
+8. Keep the PowerShell script URL, MSI URL, and Access Token ready - you'll use them in the next step
 
-**Note**: Terminated instances will remain visible for a short time before being automatically removed. You may still see them in the list with a "terminated" state.
+### Step 5: Install Agent
 
-### Step 4: Verify Cleanup
+On the Windows EC2 instance (via RDP, in PowerShell as Administrator):
 
-1. In **CloudFormation**, verify that all stacks have been deleted (the list should be empty or only show other stacks not related to this workshop)
-2. In **EC2** > **Instances**, verify that your workshop instances are terminated or no longer visible
-3. Optionally, check **S3** buckets and **IAM** roles to ensure any resources created by the CloudFormation stacks have been cleaned up
+1. Download the installation package using the URL you copied in Step 4:
+```powershell
+Invoke-WebRequest -Uri "<paste-the-copied-url-here>" -OutFile "install.zip"
+```
+
+2. Extract the ZIP file:
+```powershell
+Expand-Archive -Path "install.zip" -DestinationPath "install" -Force
+```
+
+3. Navigate to the extracted folder and check the contents:
+```powershell
+cd install
+ls
+```
+
+4. Navigate into the `signed-scripts` directory:
+```powershell
+cd signed-scripts
+```
+
+5. Execute the installation script with all required parameters:
+   - Replace `<your-token>` with the Access Token you copied from FortiCNAPP
+   - Replace `<msi-url>` with the MSI URL you copied from the MSI Package section
+```powershell
+.\Install-LWDataCollector.ps1 -AccessToken "<your-token>" -ServerURL "https://partner-demo.lacework.net" -MSIURL "<msi-url>"
+```
+
+The script will automatically install and configure the FortiCNAPP agent with the correct account and token.
+
+### Step 6: Verify Agent Installation
+
+1. Check the agent service status (the service is named `LWDataCollector`):
+```powershell
+Get-Service -Name LWDataCollector
+```
+
+2. Check the agent installation directory:
+```powershell
+ls C:\ProgramData\Lacework\
+```
+
+3. Check for agent logs:
+```powershell
+ls C:\ProgramData\Lacework\Logs\
+```
 
 ## Expected Results
 
-- All CloudFormation stacks from Labs 2 and 3 deleted
-- All EC2 instances from Labs 4 and 5 terminated
-
+- Agent installed and running on Windows instance
+- LWDataCollector service running
+- Installation directory exists at `C:\ProgramData\Lacework\`
+- Log files present in `C:\ProgramData\Lacework\Logs\`

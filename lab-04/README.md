@@ -1,103 +1,132 @@
-# Lab 4: Install Linux Agent
+# Lab 4: Install Lacework CLI and Trigger Inventory Scan
 
 ## Objectives
 
-- Install FortiCNAPP agent on Linux EC2 instance
+- Install the Lacework CLI tool in AWS CloudShell
+- Configure CLI with FortiCNAPP credentials
+- Verify AWS integrations from Labs 2 and 3
+- Trigger an inventory scan to populate compliance data
 
 ## Prerequisites
 
-- AWS account with EC2 launch permissions
+- AWS account access
+- FortiCNAPP account credentials
+- Completed Lab 2 (AWS Inventory integration)
 
 ## Lab Steps
 
-### Step 1: Log into AWS Console
+### Step 1: Log into AWS Console and Open CloudShell
 
 1. Navigate to https://aws.amazon.com/
 2. Click **Sign into console**
 3. After logging in, change to your local region (e.g., **Asia Pacific (Singapore)**) using the region selector in the top right of the AWS Console
+4. Click the **CloudShell** icon in the top navigation bar (cloud icon with `>_` symbol)
+5. Wait for CloudShell to initialize (this may take a minute the first time)
+6. Once CloudShell opens, you'll have a Linux-based terminal environment ready to use
 
-### Step 2: Create Linux EC2 Instance
+### Step 2: Set Up Installation Directory
 
-1. Navigate to **EC2** service in AWS Console
-2. Click **Launch Instance**
-3. Configure the instance:
-   - **Name**: Enter a name (e.g., `FortiCNAPP-Linux-Agent`)
-   - **Application and OS Images**: Select **Ubuntu**
-   - **Instance type**: Select **t3.micro**
-   - **Key pair (login)**: Select **Proceed without a key pair** (we'll use EC2 Instance Connect)
-4. **Network settings**:
-   - Use default
-   - The default security group will allow SSH traffic, providing external access to your instance
-5. **Configure storage**: Leave default (8 GB gp3)
-6. Click **Launch Instance**
-7. Wait for the instance to reach **Running** status
+Create a bin directory in your home folder and add it to your PATH:
 
-### Step 3: Get Agent Installation URL from FortiCNAPP
+```bash
+mkdir -p "$HOME/bin"
+echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### Step 3: Install Lacework CLI
+
+In the CloudShell terminal, run:
+
+```bash
+curl https://raw.githubusercontent.com/lacework/go-sdk/main/cli/install.sh | bash -s -- -d "$HOME/bin"
+```
+
+This will download and install the Lacework CLI tool to your home bin directory.
+
+### Step 4: Create Service User in FortiCNAPP
+
+Before creating an API key, you need to create a new service user with the appropriate permissions:
 
 1. Log into FortiCNAPP console at https://partner-demo.lacework.net/
 2. Ensure tenant is set to **FORTINETAPACDEMO**
-3. Navigate to **Settings** > **Configuration** > **Agent tokens**
-4. Find an existing Linux agent token in the list
-5. Click the **Actions** ellipsis (three dots) for the token
-6. Select **Install**
-7. In the installation panel, expand **Lacework Script (recommended)**
-8. Click **Copy URL** to copy the installation script URL
-9. Keep this URL ready - you'll use it in the next step
+3. Navigate to **Settings** > **Access Control** > **Users**
+4. Click **Add New**
+5. Choose **User Type**: **Service User**
+6. Fill in the service user details:
+   - **Name**: Enter a name (e.g., `[Your Name] Service User`)
+   - **Description**: Enter a description (e.g., `lab-04`)
+7. Click **Next**
+8. Add the following user groups to grant the necessary permissions:
+   - **'Cloud Integrations'** - Required for AWS integration management
+   - **'Code Security Scanner'** - Required for code security scanning (Labs 10-11)
+9. Complete the service user creation
 
-### Step 4: Connect to Linux EC2 Instance
+### Step 5: Create API Key in FortiCNAPP
 
-1. In AWS Console, navigate to **EC2** service
-2. Click on **Instances** in the left navigation
-3. Select the Linux EC2 instance you just created
-4. Click **Connect**
-5. Select **EC2 Instance Connect** tab
-6. Click **Connect** (this will open a browser-based terminal - no key pair needed)
-7. Once connected, verify system requirements:
-   - Check available memory: `free -h`
-   - Verify network connectivity: `ping -c 3 8.8.8.8`
-   - Confirm sudo access: `sudo whoami`
+Now create an API key attached to the service user you just created:
 
-### Step 5: Install Agent
+1. Navigate to **Settings** > **Configuration** > **API keys**
+2. Click **Create API key**
+3. Fill in the API key details:
+   - **Name**: Enter a name (e.g., `service-user-api-key-yourname`)
+   - **Description**: Enter a description (e.g., `lab-04`)
+   - **Assign this to a service user**: Toggle this **ON**
+   - **Select a service user**: Choose the service user you just created (e.g., `[Your Name] Service User`)
+4. Click **Save**
+5. After saving, click on the ellipsis (three dots) next to the API key in the list and select **Download** to download the key as JSON.
+6. Open the downloaded JSON file and note the **API Key** and **API Secret** values. Keep these credentials ready for the next step
 
-In the EC2 Instance Connect terminal, run the following commands:
+### Step 6: Configure CLI
 
-1. Download the installation script using the URL you copied in Step 3:
+In CloudShell, run:
+
 ```bash
-wget <paste-the-copied-url-here>
+lacework configure
 ```
 
-2. Make the script executable:
+Enter your FortiCNAPP account credentials when prompted:
+- **Account**: Your FortiCNAPP account name (e.g., `partner-demo`)
+- **API Key**: The API key you just created
+- **API Secret**: The API secret you just copied
+
+### Step 7: Verify CLI Installation
+
 ```bash
-chmod +x install.sh
+lacework version
+lacework api get /api/v2/UserProfile
 ```
 
-3. Execute the installation script:
+The second command should return your user profile information, confirming the CLI is properly configured and connected.
+
+### Step 8: List Cloud Account Integrations
+
+Verify that the integrations from Labs 2 and 3 are visible:
+
 ```bash
-sudo ./install.sh
+lacework cloud-account list
 ```
 
-The script will automatically install and configure the FortiCNAPP agent (datacollector) with the correct account and token.
+You should see entries for your AWS account including:
+- `AwsCfg` (Configuration integration from Lab 2)
+- `AwsCtSqs` (CloudTrail integration from Lab 2)
+- `AwsSidekick` (Agentless Workload Scanning from Lab 3, if completed)
 
-### Step 6: Verify Agent Installation
+### Step 9: Trigger Inventory Scan
 
-1. Check the agent status using the datacollector binary:
+Normally, FortiCNAPP collects resource inventory on a scheduled cycle (up to 24 hours). To avoid waiting, you can trigger an immediate scan.
+
 ```bash
-sudo /var/lib/lacework/datacollector -status
+lacework compliance aws scan
 ```
 
-This will return JSON output showing the agent status (e.g., `{"Version":2,"Datacollector":{"Status":"ACTIVE",...}}`). A status of "ACTIVE" indicates the agent is running and connected.
+This triggers a resource inventory collection for all integrated AWS accounts. The scan will run in the background and takes 1-2 hours to complete. Once finished, compliance reports and resource inventory data will be populated in the FortiCNAPP console.
 
-2. Check for agent logs:
-```bash
-ls -la /var/log/lacework/
-```
-
-3. Tail the agent log to see real-time activity:
-```bash
-sudo tail -f /var/log/lacework/datacollector.log
-```
-Press `Ctrl+C` to stop tailing the log.
+**Note:** Only one scan can run at a time. If another student has already triggered a scan, your request will be ignored until the current scan completes.
 
 ## Expected Results
 
-- Agent installed and running on Linux instance
+- Lacework CLI installed and configured in AWS CloudShell
+- CLI connectivity verified with FortiCNAPP
+- AWS integrations from Labs 2 and 3 confirmed via CLI
+- Inventory scan triggered to populate compliance data
