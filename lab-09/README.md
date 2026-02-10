@@ -19,7 +19,7 @@
 
 1. Navigate to https://aws.amazon.com/
 2. Click **Sign into console**
-3. After logging in, change to your local region (e.g., **Asia Pacific (Singapore)**) using the region selector in the top right of the AWS Console
+3. After logging in, change to your local region (e.g., **Frankfurt (eu-central-1)**) using the region selector in the top right of the AWS Console
 4. Click the **CloudShell** icon in the top navigation bar (cloud icon with `>_` symbol)
 5. Wait for CloudShell to initialize
 
@@ -198,7 +198,7 @@ You should see entries for:
 
 2. **In FortiCNAPP Console:**
    - Log into FortiCNAPP console at https://partner-demo.lacework.net/
-   - Ensure tenant is set to **FORTINETAPACDEMO**
+   - Ensure tenant is set to **FORTINETEMEADEMO**
    - Navigate to **Settings** > **Integrations** > **Cloud accounts**
    - Verify that your AWS account appears with both Configuration and CloudTrail integrations active
 
