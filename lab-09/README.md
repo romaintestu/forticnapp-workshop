@@ -45,14 +45,14 @@ Use the Lacework CLI to generate Terraform code for AWS integration. This will c
 ```bash
 lacework generate cloud-account aws \
   --config --cloudtrail --noninteractive \
-  --aws_region ap-southeast-1
+  --aws_region eu-central-1
 ```
 
 **Parameters explained:**
 - `--config`: Enable AWS Configuration integration
 - `--cloudtrail`: Enable AWS CloudTrail integration
 - `--noninteractive`: Run without prompts (uses defaults)
-- `--aws_region ap-southeast-1`: Specify the AWS region (Asia Pacific - Singapore)
+- `--aws_region eu-central-1`: Specify the AWS region (Asia Pacific - Singapore)
 
 This command generates Terraform files in the `~/lacework/aws` directory.
 
