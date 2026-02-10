@@ -20,7 +20,7 @@
 ### Step 1: Open AWS CloudShell
 
 1. Log into AWS Console at https://aws.amazon.com/
-2. Change to your local region (e.g., **Asia Pacific (Singapore)**) using the region selector in the top right
+2. Change to your local region (e.g., **Frankfurt**) using the region selector in the top right
 3. Click the **CloudShell** icon in the top navigation bar
 4. Wait for CloudShell to initialize
 
