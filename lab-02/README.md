@@ -10,14 +10,14 @@
 
 1. Navigate to https://aws.amazon.com/
 2. Click **Sign into console**
-3. **IMPORTANT:** After logging in, change to your local region (e.g., **Asia Pacific (Singapore)**) using the region selector in the top right of the AWS Console
+3. **IMPORTANT:** After logging in, change to your local region (e.g., **Frankfurt (eu-central-1)**) using the region selector in the top right of the AWS Console
    - This step is critical - the CloudFormation template will deploy to whatever region is selected
    - If you skip this step, resources will be created in the wrong region
 
 ### Step 2: Get CloudFormation Template from FortiCNAPP
 
 1. Log into FortiCNAPP console at https://partner-demo.lacework.net/
-2. Ensure tenant is set to **FORTINETAPACDEMO**
+2. Ensure tenant is set to **FORTINETEMEADEMO**
 3. Navigate to **Settings** > **Integrations** > **Cloud accounts**
 4. Click **Add New**
 5. Select **Amazon Web Services** as the cloud provider
