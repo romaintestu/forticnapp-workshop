@@ -60,6 +60,7 @@ Before creating an API key, you need to create a new service user with the appro
 8. Add the following user groups to grant the necessary permissions:
    - **'Cloud Integrations'** - Required for AWS integration management
    - **'Code Security Scanner'** - Required for code security scanning (Labs 10-11)
+   - **'admin'** - Required to launch the full scan 
 9. Complete the service user creation
 
 ### Step 5: Create API Key in FortiCNAPP
