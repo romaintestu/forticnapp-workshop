@@ -133,7 +133,7 @@ Generate detailed scan reports in multiple formats for sharing and documentation
 **Generate JSON Report:**
 
 ```bash
-lacework sca scan ./ -f json -o scan-report.json
+lacework sca scan ./ -f lw-json -o scan-report.json
 ```
 
 This creates a comprehensive JSON report containing all scan findings, including:
