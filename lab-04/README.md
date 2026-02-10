@@ -19,7 +19,7 @@
 
 1. Navigate to https://aws.amazon.com/
 2. Click **Sign into console**
-3. After logging in, change to your local region (e.g., **Asia Pacific (Singapore)**) using the region selector in the top right of the AWS Console
+3. After logging in, change to your local region (e.g., **Frankfurt (eu-central-1)**) using the region selector in the top right of the AWS Console
 4. Click the **CloudShell** icon in the top navigation bar (cloud icon with `>_` symbol)
 5. Wait for CloudShell to initialize (this may take a minute the first time)
 6. Once CloudShell opens, you'll have a Linux-based terminal environment ready to use
@@ -49,7 +49,7 @@ This will download and install the Lacework CLI tool to your home bin directory.
 Before creating an API key, you need to create a new service user with the appropriate permissions:
 
 1. Log into FortiCNAPP console at https://partner-demo.lacework.net/
-2. Ensure tenant is set to **FORTINETAPACDEMO**
+2. Ensure tenant is set to **FORTINETEMEADEMO**
 3. Navigate to **Settings** > **Access Control** > **Users**
 4. Click **Add New**
 5. Choose **User Type**: **Service User**
