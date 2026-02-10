@@ -14,7 +14,7 @@
 
 1. Navigate to https://aws.amazon.com/
 2. Click **Sign into console**
-3. After logging in, change to your local region (e.g., **Asia Pacific (Singapore)**) using the region selector in the top right of the AWS Console
+3. After logging in, change to your local region (e.g., **Frankfurt (eu-central-1)**) using the region selector in the top right of the AWS Console
 
 ### Step 2: Create Windows EC2 Instance
 
@@ -67,7 +67,7 @@
 ### Step 4: Get Agent Installation Information from FortiCNAPP
 
 1. Log into FortiCNAPP console at https://partner-demo.lacework.net/
-2. Ensure tenant is set to **FORTINETAPACDEMO**
+2. Ensure tenant is set to **FORTINETEMEADEMO**
 3. Navigate to **Settings** > **Configuration** > **Agent tokens**
 4. Find an existing Windows agent token in the list
 5. Click the **Actions** ellipsis (three dots) for the token
