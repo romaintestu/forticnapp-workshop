@@ -77,7 +77,7 @@ After the stack creation is complete, review the resources that were created:
 
 1. Navigate to **IAM** service in AWS Console
 2. Click on **Roles** in the left navigation
-3. Find the IAM role that was created (it will be related to the CloudFormation stack name)
+3. Find the IAM role that was created (it will be related to the CloudFormation stack name) through the search bar
 4. Click on the role name to view details
 5. Review the role's permissions and trust relationships
    - The trust relationship will show that FortiCNAPP (Lacework) can assume this role
