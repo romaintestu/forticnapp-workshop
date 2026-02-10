@@ -152,7 +152,7 @@ cat scan-report.json
 **Generate Markdown Report:**
 
 ```bash
-lacework sca scan ./ -f md -o scan-report.md
+lacework sca scan ./ -f md-summary -o scan-report.md
 ```
 
 This creates a human-readable Markdown report that includes:
