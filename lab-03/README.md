@@ -49,7 +49,7 @@ The CloudFormation template should now be open in your AWS Console on Step 1 (Cr
 2. Specify stack details: Review the parameters
    - Enter a **Stack name** (e.g., `AWS-AgentlessScanning`). Stack name must contain only letters, numbers, hyphens. Must start with a letter.
    - In the **Scanner Deployment Configuration** section, find the **Regions** parameter
-   - Set **Regions** to `ap-southeast-1` (this is the region where workloads exist and will be scanned)
+   - Set **Regions** to `eu-central-1` (this is the region where workloads exist and will be scanned)
    - In the **AWS Service Permissions** section, For **Quota Check**: "Can a new VPC and VPC Internet Gateway be created in each selected Region?"
    - Select **Yes** from the dropdown (this is required and not pre-populated)
    - API Token and other parameters are pre-configured
