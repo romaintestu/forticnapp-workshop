@@ -52,7 +52,7 @@ lacework generate cloud-account aws \
 - `--config`: Enable AWS Configuration integration
 - `--cloudtrail`: Enable AWS CloudTrail integration
 - `--noninteractive`: Run without prompts (uses defaults)
-- `--aws_region eu-central-1`: Specify the AWS region (Asia Pacific - Singapore)
+- `--aws_region eu-central-1`: Specify the AWS region (frankfurt)
 
 This command generates Terraform files in the `~/lacework/aws` directory.
 
